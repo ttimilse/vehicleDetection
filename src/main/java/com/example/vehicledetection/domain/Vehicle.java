@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class Vehicle extends BaseModel{
     @ManyToMany
-    List<Camera> cameraList;
+    List<Camera> cameras;
     private String name;
     private String make;
     private String model;
