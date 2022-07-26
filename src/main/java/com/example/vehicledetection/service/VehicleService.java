@@ -28,13 +28,22 @@ public class VehicleService {
         List<Camera> validCameras = new ArrayList<>();
 
         if (listOfCameras != null) {
-            for (Camera c : listOfCameras) {
+
+            listOfCameras.forEach(c -> {
                 Camera cameraFromDatabase = cameraRepository.findById(c.getId()).orElse(null);
                 if (cameraFromDatabase == null) {
                     throw new ResourceNotFoundException("Camera ID not found" + c.getId());
                 }
-                validCameras.add(cameraFromDatabase);
-            }
+              validCameras.add(cameraFromDatabase);
+
+            });
+//            for (Camera c : listOfCameras) {
+//                Camera cameraFromDatabase = cameraRepository.findById(c.getId()).orElse(null);
+//                if (cameraFromDatabase == null) {
+//                    throw new ResourceNotFoundException("Camera ID not found" + c.getId());
+//                }
+//                validCameras.add(cameraFromDatabase);
+//            }
             vehicle.setCameras(validCameras);
         } else {
             throw new IllegalStateException("Camera cannot be null");
@@ -61,14 +70,23 @@ public class VehicleService {
         List<Camera> cameraList = vehicleFromDatabase.getCameras();
         List<Camera> detectedListOfCamera = new ArrayList<>();
 
-        for (Camera camera : cameraList) {
+        cameraList.forEach(camera -> {
             Location location = camera.getLocation();
 
             if (location.getId().equals(locationFromDatabase.getId())) {
                 detectedListOfCamera.add(camera);
             }
 
-        }
+        });
+
+//        for (Camera camera : cameraList) {
+//            Location location = camera.getLocation();
+//
+//            if (location.getId().equals(locationFromDatabase.getId())) {
+//                detectedListOfCamera.add(camera);
+//            }
+//
+//        }
         if (detectedListOfCamera.size() == 0) {
 
             detectionResponse.setStatus("Not found");
